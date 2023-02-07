@@ -116,12 +116,14 @@ view: order_items {
 
 
   measure: total_sales_price {
+    label: "Total Sales Price"
     type: sum
     value_format_name: usd
     sql: ${sale_price} ;;
   }
 
   measure: total_large_sales_price {
+    label: "Sales Over 100"
     type: sum
     value_format_name: usd
     filters: [order_items.sale_price: ">100"]
@@ -143,6 +145,7 @@ view: order_items {
   }
 
   measure: total_gross_margin {
+    label: "Total Gross Margin"
     type: sum
     value_format_name: usd
     sql: ${gross_margin} ;;
