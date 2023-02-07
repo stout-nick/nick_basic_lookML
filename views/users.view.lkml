@@ -80,6 +80,7 @@ view: users {
   }
 
   dimension: zip {
+    label: "zipcode"
     type: zipcode
     sql: ${TABLE}.zip ;;
   }
