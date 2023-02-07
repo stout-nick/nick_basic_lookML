@@ -83,7 +83,12 @@ view: users {
     type: zipcode
     sql: ${TABLE}.zip ;;
   }
-
+  dimension:  age_tier {
+  type:  tier
+  style: integer
+  tiers: [0,10, 20, 30, 40, 50, 60, 70, 80, 90]
+  sql: ${age} ;;
+ }
   measure: count {
     type: count
     drill_fields: [id, last_name, first_name, orders.count, order_items.count]

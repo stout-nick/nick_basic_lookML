@@ -135,10 +135,23 @@ view: order_items {
     sql: ${sale_price} - ${inventory_items.cost};;
   }
 
+  measure: average_sales_per_user{
+      type: number
+      value_format_name: usd
+      sql:1.0 * ${total_sales_price}/NULLIF(${users.count},0) ;;
+
+  }
+
   measure: total_gross_margin {
     type: sum
     value_format_name: usd
     sql: ${gross_margin} ;;
+  }
+
+  measure: item_gross_margin_percentage {
+    label: "Item Gross Margin %"
+    value_format_name: percent_2
+    sql: 1.0 * ${gross_margin}/NULLIF(${sale_price},0) ;;
   }
 
   measure: average_gross_margin {
@@ -146,6 +159,7 @@ view: order_items {
     value_format_name: usd
     sql: ${gross_margin} ;;
   }
+
 
 
   # ----- Sets of fields for drilling ------

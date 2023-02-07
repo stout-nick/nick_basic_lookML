@@ -86,8 +86,31 @@ view: orders {
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension:  is_order_paid {
+    type: yesno
+    sql: ${status} = 'paid' ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [order_id, users.last_name, users.id, users.first_name, order_items.count]
   }
-}
+   measure: total_sales {
+     type: sum
+     sql: ${TABLE}.sale_price ;;
+   }
+
+   measure: min_sales {
+     type: min
+     sql: ${TABLE}.sale_price ;;
+   }
+
+   measure: max_sales {
+     type: max
+     sql: ${TABLE}.sale_price ;;
+   }
+
+   measure: average_sales {
+     sql: ${TABLE}.sale_price ;;
+   }
+ }
