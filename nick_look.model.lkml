@@ -9,7 +9,7 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 
 datagroup: nicks_datagroup {
   max_cache_age: "24 hours"
-  sql_trigger: SELECT max(id) FROM my_tablename ;;
+  sql_trigger: SELECT max(id) FROM order_items ;;
   interval_trigger: "4 hours"
   label: "nick basic cache"
   description: "4 hour cache"
@@ -19,29 +19,41 @@ datagroup: nicks_datagroup {
     sql_always_where: ${orders.created_date} >= '2021-01-01' ;;
     join: orders {
       fields: [users.last_name, users.last_name, order_items.id, orders.count]
-     relationship: many_to_one
+     type: full_outer
+    relationship: many_to_one
      sql_on: ${orders.order_id} = ${order_items.order_id} ;;
    }
     join: inventory_items {
+      type: full_outer
       relationship: many_to_one
       sql_on: ${order_items.inventory_item_id}.id} = ${inventory_items.id} ;;
     }
 
    join: users {
+     type: left_outer
      relationship: many_to_one
      sql_on: ${users.id} = ${orders.user_id} ;;
    }
  }
 
- explore: products {
-  always_filter: {
-    filters: [products.category: "Shirts"]
-  }
-  join: inventory_items {
-    relationship: one_to_many #how do you remember relationships, many to one vs one to many
-    sql_on: ${products.id} = ${inventory_items.product_id} ;;
+explore: inventory_items {
+  label: "Inventory"
+  join: products {
     type: inner
+    relationship: many_to_one
+    sql_on: ${inventory_items.product_id} = ${products.id} ;;
   }
+
+
+ # explore: products {
+ #  always_filter: {
+ #    filters: [products.category: "Shirts"]
+ #  }
+ #  join: inventory_items {
+ #    relationship: one_to_many #how do you remember relationships, many to one vs one to many
+ #    sql_on: ${products.id} = ${inventory_items.product_id} ;;
+ #    type: inner
+ #  }
 }
 explore: distribution_centers{
   join: inventory_items {

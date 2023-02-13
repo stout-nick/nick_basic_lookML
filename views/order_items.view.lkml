@@ -85,6 +85,7 @@ view: order_items {
   }
 
   dimension: status {
+    description: "Order Status"
     type: string
     sql: ${TABLE}.status ;;
   }
@@ -101,6 +102,7 @@ view: order_items {
   }
 
   dimension: Sales_Price_Words {
+    description: "How rich are people who are ordering"
     case: {
       when: {
         sql: ${sale_price} < 250 ;;
@@ -123,6 +125,7 @@ view: order_items {
   }
 
   measure: total_large_sales_price {
+    description: "Total large sales over $100"
     label: "Sales Over 100"
     type: sum
     value_format_name: usd
@@ -131,6 +134,7 @@ view: order_items {
   }
 
   dimension: gross_margin {
+    description: "Sale price - inventory cost"
     label: "Gross Margin"
     type: number
     value_format_name: usd
@@ -152,6 +156,7 @@ view: order_items {
   }
 
   measure: item_gross_margin_percentage {
+    description: "gross margin % per item"
     label: "Item Gross Margin %"
     value_format_name: percent_2
     sql: 1.0 * ${gross_margin}/NULLIF(${sale_price},0) ;;
