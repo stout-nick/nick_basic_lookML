@@ -26,7 +26,7 @@ datagroup: nicks_datagroup {
     join: inventory_items {
       type: full_outer
       relationship: many_to_one
-      sql_on: ${order_items.inventory_item_id}.id} = ${inventory_items.id} ;;
+      sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     }
 
    join: users {
